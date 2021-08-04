@@ -26,6 +26,7 @@ namespace CatalogApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,8 +36,17 @@ namespace CatalogApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseSwagger(c =>
+            {
+                c.SerializeAsV2 = true;
+            });
 
-            app.UseHttpsRedirection();
+            app.UseSwaggerUI(c =>
+            c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1")
+            ); 
+
+            app.UseHttpsRedirection(); 
 
             app.UseRouting();
 
